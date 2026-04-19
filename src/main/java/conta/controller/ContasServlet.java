@@ -56,11 +56,11 @@ public class ContasServlet extends HttpServlet {
     }
 
     private void listar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        try {
-//            req.setAttribute("contas", contaService.listar());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            req.setAttribute("contas", contaService.listar());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         req.getRequestDispatcher("/paginas/contas.jsp").forward(req, resp);
     }

@@ -8,7 +8,6 @@ import conta.dao.ContaDAO;
 import conta.model.Conta;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +27,10 @@ public class ContaService {
         conta.setDataCriacao(LocalDateTime.now());
         
         return contaDAO.salvar(conta);
+    }
+    
+    public List<Conta> listar() throws Exception {
+        return contaDAO.listar();
     }
     
     

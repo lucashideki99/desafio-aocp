@@ -10,7 +10,7 @@ import java.sql.DriverManager;
  *
  * @author lucas
  */
-public class conexao {
+public class Conexao {
     private static final String URL = "jdbc:postgresql://localhost:5432/desafio";
     private static final String USER = "admin";
     private static final String PASS = "1234";

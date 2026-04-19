@@ -4,10 +4,13 @@
  */
 package conta.dao;
 
-import com.lucas.desafio.util.conexao;
+import com.lucas.desafio.util.Conexao;
 import conta.model.Conta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,7 +22,7 @@ public class ContaDAO {
 
         String sql = "INSERT INTO conta (nome_titular, numero_conta, saldo, status, data_criacao) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, conta.getNomeTitular());
             stmt.setInt(2, conta.getNumeroConta());
@@ -30,4 +33,29 @@ public class ContaDAO {
             return stmt.executeUpdate() > 0;
         }
     }
+
+    public List<Conta> listar() throws Exception {
+
+        List<Conta> lista = new ArrayList<>();
+
+        String sql = "SELECT id, nome_titular, numero_conta, saldo, status FROM conta";
+
+        try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Conta conta = new Conta();
+
+                conta.setId(rs.getInt("id"));
+                conta.setNomeTitular(rs.getString("nome_titular"));
+                conta.setNumeroConta(rs.getInt("numero_conta"));
+                conta.setSaldo(rs.getBigDecimal("saldo"));
+                conta.setStatus(rs.getString("status"));
+
+                lista.add(conta);
+            }
+        }
+
+        return lista;
+    }
+
 }

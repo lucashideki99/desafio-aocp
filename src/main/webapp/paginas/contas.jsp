@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,7 +24,7 @@
             <!-- LISTA -->
             <h5>📋 Contas cadastradas</h5>
 
-            <table class="table table-striped">
+            <table class="table table-striped"> 
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -36,7 +37,15 @@
                 </thead>
 
                 <tbody>
-
+                <c:forEach var="conta" items="${contas}">
+                    <tr>
+                        <td>${conta.id}</td>
+                        <td>${conta.nomeTitular}</td>
+                        <td>${conta.numeroConta}</td>
+                        <td>${conta.saldo}</td>
+                        <td>${conta.status}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
 
@@ -57,7 +66,7 @@
             }
         </script>
 
-        
+
         <script src="${pageContext.request.contextPath}/js/contas.js"></script>
     </body>
 </html>

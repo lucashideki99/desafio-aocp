@@ -19,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Conta {
     
-    private Long id;
+    private Integer id;
     private String nomeTitular;
     private Integer numeroConta;
     private BigDecimal saldo;
