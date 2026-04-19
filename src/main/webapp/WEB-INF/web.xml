@@ -3,4 +3,15 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    
+    <context-param>
+        <param-name>app.name</param-name>
+        <param-value>Finance Control</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>app.version</param-name>
+        <param-value>1.0.0</param-value>
+    </context-param>
+    
 </web-app>
