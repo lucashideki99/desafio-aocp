@@ -46,7 +46,7 @@
 
                 <!-- CONTAS -->
                 <div class="col-md-4">
-                    <a href="/desafio/paginas/contas.jsp" style="text-decoration:none;">
+                    <a href="/desafio/contaServlet?action=listar" style="text-decoration:none;">
                         <div class="card card-menu text-center p-4">
                             <h3>🏦 Contas</h3>
                             <p>Gerenciar contas bancárias</p>

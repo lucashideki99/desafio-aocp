@@ -11,39 +11,15 @@
         <jsp:include page="/header.jsp" />
 
         <div class="container mt-4">
-
             <h2>🏦 Gerenciamento de Contas</h2>
             <hr>
 
-            <!-- FORM CADASTRO -->
-            <div class="card p-3 mb-4">
-                <h5>Criar nova conta</h5>
+            <div class="d-flex justify-content-end mb-3">
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdicionar">
+                    + Adicionar Conta
+                </button>
 
-                <form action="contaServlet" method="post">
-
-                    <input type="hidden" name="action" value="salvar">
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label>Nome titular</label>
-                            <input type="text" name="nomeTitular" class="form-control" required>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label>Número da conta</label>
-                            <input type="text" name="numeroConta" class="form-control" required>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label>Saldo inicial</label>
-                            <input type="number" step="0.01" name="saldo" class="form-control" required>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-primary mt-3">Salvar</button>
-                </form>
             </div>
-
             <!-- LISTA -->
             <h5>📋 Contas cadastradas</h5>
 
@@ -60,13 +36,27 @@
                 </thead>
 
                 <tbody>
-                   
+
                 </tbody>
             </table>
 
         </div>
-        
+        <!-- INCLUDES DOS MODAIS -->
+        <jsp:include page="/componentes/modalAdicionarConta.jsp" />
+        <jsp:include page="/componentes/modalDetalheConta.jsp" /> 
+
         <jsp:include page="/footer.jsp" />
-        
+
+        <script>
+            function abrirDetalhe(id, nome, numero, saldo, status) {
+                document.getElementById("detalheId").innerText = id;
+                document.getElementById("detalheNome").innerText = nome;
+                document.getElementById("detalheNumero").innerText = numero;
+                document.getElementById("detalheSaldo").innerText = saldo;
+                document.getElementById("detalheStatus").innerText = status;
+            }
+        </script>
+
+
     </body>
 </html>
