@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Transferência</title>
+        <title>Movimentação</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
 
@@ -12,12 +12,12 @@
 
         <div class="container mt-4">
 
-            <h2>💸 Nova Transferência</h2>
+            <h2>💸 Nova Movimentação</h2>
             <hr>
 
             <div class="card p-4">
 
-                <form action="transferenciaServlet" method="post">
+                <form action="${pageContext.request.contextPath}/transferenciaServlet" method="post">
 
                     <input type="hidden" name="action" value="transferir">
 
