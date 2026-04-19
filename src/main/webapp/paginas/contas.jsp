@@ -37,15 +37,67 @@
                 </thead>
 
                 <tbody>
-                <c:forEach var="conta" items="${contas}">
-                    <tr>
-                        <td>${conta.id}</td>
-                        <td>${conta.nomeTitular}</td>
-                        <td>${conta.numeroConta}</td>
-                        <td>${conta.saldo}</td>
-                        <td>${conta.status}</td>
-                    </tr>
-                </c:forEach>
+                    <c:forEach var="conta" items="${contas}">
+                        <tr>
+                            <td>${conta.id}</td>
+                            <td>${conta.nomeTitular}</td>
+                            <td>${conta.numeroConta}</td>
+                            <td>${conta.saldo}</td>
+                            <td>${conta.status}</td>
+
+                            <td>
+                                <!-- ATUALIZAR -->
+                                <button class="btn btn-warning btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalAdicionar"
+                                        onclick="preencherEdicao(
+                                                        '${conta.id}',
+                                                        '${conta.nomeTitular}',
+                                                        '${conta.numeroConta}',
+                                                        '${conta.saldo}',
+                                                        '${conta.status}'
+                                                        )">
+                                    Atualizar
+                                </button>
+
+                                <!-- DESATIVAR (somente ATIVA) -->
+                                <c:if test="${conta.status == 'ATIVA'}">
+                                    <form action="${pageContext.request.contextPath}/contaServlet"
+                                          method="post"
+                                          style="display:inline;">
+
+                                        <input type="hidden" name="action" value="desativar">
+                                        <input type="hidden" name="id" value="${conta.id}">
+
+                                        <button type="submit"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Deseja desativar esta conta?')">
+                                            Desativar
+                                        </button>
+                                    </form>
+                                </c:if>
+
+                                <!-- ATIVAR (somente INATIVA) -->
+                                <c:if test="${conta.status == 'INATIVA'}">
+                                    <form action="${pageContext.request.contextPath}/contaServlet"
+                                          method="post"
+                                          style="display:inline;">
+
+                                        <input type="hidden" name="action" value="ativar">
+                                        <input type="hidden" name="id" value="${conta.id}">
+
+                                        <button type="submit"
+                                                class="btn btn-success btn-sm"
+                                                onclick="return confirm('Deseja ativar esta conta?')">
+                                            Ativar
+                                        </button>
+                                    </form>
+                                </c:if>
+
+                            </td>
+
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
 

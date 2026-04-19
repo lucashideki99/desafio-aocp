@@ -33,6 +33,9 @@ public class ContaService {
         return contaDAO.listar();
     }
     
+    public void atualizaStatus(int id, String acao) throws Exception {
+        contaDAO.atualizaStatus(id, acao);
+    }
     
     private boolean validaCampos(Conta conta) throws Exception{
         List<Conta> contas = contaDAO.listar();
@@ -58,6 +61,7 @@ public class ContaService {
                 return false;
             }
         }
+        
         return true;
     }
     

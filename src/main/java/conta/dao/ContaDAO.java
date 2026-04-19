@@ -58,4 +58,30 @@ public class ContaDAO {
         return lista;
     }
 
+    public void atualizaStatus(int id, String atualizaStatus) throws Exception {
+        String acao = null;
+        
+        if(atualizaStatus.equals("desativar")){
+            acao = "INATIVA";
+        }
+        
+        if(atualizaStatus.equals("ativar")){
+            acao = "ATIVA";
+        }
+        
+        if(acao == null){
+            return;
+        }
+        
+        String sql = "UPDATE conta SET status = ? WHERE id = ?";
+
+        try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, acao);
+            stmt.setInt(2, id);
+            
+            stmt.executeUpdate();
+        }
+    }
+
 }

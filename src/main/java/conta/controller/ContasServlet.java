@@ -52,6 +52,22 @@ public class ContasServlet extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+        }
+        if ("desativar".equals(action)) {
+            try {
+                atualizaEstatus(req, resp, "desativar");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if ("ativar".equals(action)) {
+            try {
+                atualizaEstatus(req, resp, "ativar");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -74,11 +90,23 @@ public class ContasServlet extends HttpServlet {
         conta.setStatus(req.getParameter("status"));
 
         boolean resultado = contaService.salvar(conta);
+        resp.sendRedirect("contaServlet?action=listar");
 
-        if (resultado) {
-            resp.sendRedirect("contaServlet?action=listar");
-        } 
+    }
 
+    private void atualizaEstatus(HttpServletRequest req, HttpServletResponse resp, String acao) throws IOException {
+
+        int id = Integer.parseInt(req.getParameter("id"));
+
+        try {
+
+            contaService.atualizaStatus(id, acao);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        resp.sendRedirect("contaServlet?action=listar");
     }
 
 }
