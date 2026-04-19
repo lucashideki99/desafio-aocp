@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
 
-            <form action="contaServlet" method="post">
+            <form id="formAdicionarConta" action="${pageContext.request.contextPath}/contaServlet" method="post">
                 <input type="hidden" name="action" value="salvar">
 
                 <div class="modal-header">
@@ -11,29 +11,41 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label>Nome titular</label>
-                            <input type="text" name="nomeTitular" class="form-control" required>
-                        </div>
 
-                        <div class="col-md-4">
-                            <label>Número da conta</label>
-                            <input type="text" name="numeroConta" class="form-control" required>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label>Saldo inicial</label>
-                            <input type="number" step="0.01" name="saldo" class="form-control" required>
-                        </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nome do Titular</label>
+                        <input type="text" name="nomeTitular" class="form-control" required>
                     </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Número da Conta</label>
+                        <input type="number" name="numeroConta" class="form-control" required min="1" max="999999" >
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Saldo Inicial</label>
+                        <input type="number" step="0.01" name="saldo" class="form-control" required min="0">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <select name="status" class="form-select" required>
+                            <option value="ATIVA" selected>ATIVA</option>
+                            <option value="INATIVA">INATIVA</option>
+                        </select>
+                    </div>
+
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
+
             </form>
 
         </div>
     </div>
 </div>
+                
+                

@@ -21,7 +21,7 @@ public class Conta {
     
     private Long id;
     private String nomeTitular;
-    private String numeroConta;
+    private Integer numeroConta;
     private BigDecimal saldo;
     private String status;
     private LocalDateTime dataCriacao;

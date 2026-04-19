@@ -57,6 +57,7 @@
             }
         </script>
 
-
+        
+        <script src="${pageContext.request.contextPath}/js/contas.js"></script>
     </body>
 </html>
