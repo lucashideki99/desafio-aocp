@@ -58,28 +58,49 @@ public class ContaDAO {
         return lista;
     }
 
+    public boolean atualizar(Conta conta) throws Exception {
+
+        String sql = "UPDATE conta SET "
+                + "nome_titular = ?, "
+                + "numero_conta = ?, "
+                + "saldo = ?, "
+                + "status = ? "
+                + "WHERE id = ?";
+
+        try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, conta.getNomeTitular());
+            stmt.setInt(2, conta.getNumeroConta());
+            stmt.setBigDecimal(3, conta.getSaldo());
+            stmt.setString(4, conta.getStatus());
+            stmt.setInt(5, conta.getId());
+
+            return stmt.executeUpdate() > 0;
+        }
+    }
+
     public void atualizaStatus(int id, String atualizaStatus) throws Exception {
         String acao = null;
-        
-        if(atualizaStatus.equals("desativar")){
+
+        if (atualizaStatus.equals("desativar")) {
             acao = "INATIVA";
         }
-        
-        if(atualizaStatus.equals("ativar")){
+
+        if (atualizaStatus.equals("ativar")) {
             acao = "ATIVA";
         }
-        
-        if(acao == null){
+
+        if (acao == null) {
             return;
         }
-        
+
         String sql = "UPDATE conta SET status = ? WHERE id = ?";
 
         try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, acao);
             stmt.setInt(2, id);
-            
+
             stmt.executeUpdate();
         }
     }

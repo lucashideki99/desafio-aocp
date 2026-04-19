@@ -28,16 +28,8 @@ public class ContasServlet extends HttpServlet {
 
         String action = req.getParameter("action");
 
-        if (action == null) {
-            action = "listar";
-        }
-
-        switch (action) {
-            case "listar":
-                listar(req, resp);
-                break;
-            default:
-                listar(req, resp);
+        if ("listar".equals(action) || action == null) {
+            listar(req, resp);
         }
     }
 
@@ -46,27 +38,32 @@ public class ContasServlet extends HttpServlet {
 
         String action = req.getParameter("action");
 
-        if ("salvar".equals(action)) {
+        if ("salvar".equals(action) || "atualizar".equals(action)) {
+            
             try {
-                salvar(req, resp);
+                salvar(req, resp, action);
             } catch (Exception e) {
                 e.printStackTrace();
+                resp.sendRedirect("contaServlet?action=listar");
             }
 
         }
+
         if ("desativar".equals(action)) {
             try {
-                atualizaEstatus(req, resp, "desativar");
+                atualizaStatus(req, resp, "desativar");
             } catch (Exception e) {
                 e.printStackTrace();
+                resp.sendRedirect("contaServlet?action=listar");
             }
         }
 
         if ("ativar".equals(action)) {
             try {
-                atualizaEstatus(req, resp, "ativar");
+                atualizaStatus(req, resp, "ativar");
             } catch (Exception e) {
                 e.printStackTrace();
+                resp.sendRedirect("contaServlet?action=listar");
             }
         }
     }
@@ -76,25 +73,31 @@ public class ContasServlet extends HttpServlet {
             req.setAttribute("contas", contaService.listar());
         } catch (Exception e) {
             e.printStackTrace();
+            resp.sendRedirect("contaServlet?action=listar");
         }
 
         req.getRequestDispatcher("/paginas/contas.jsp").forward(req, resp);
     }
 
-    private void salvar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, Exception {
+    private void salvar(HttpServletRequest req, HttpServletResponse resp, String action) throws ServletException, IOException, Exception {
+
         Conta conta = new Conta();
 
         conta.setNomeTitular(req.getParameter("nomeTitular"));
         conta.setNumeroConta(Integer.valueOf(req.getParameter("numeroConta")));
         conta.setSaldo(new BigDecimal(req.getParameter("saldo")));
         conta.setStatus(req.getParameter("status"));
+        
+        if("atualizar".equals(action)){
+            conta.setId(Integer.parseInt(req.getParameter("id")));
+        }
+        contaService.salvar(conta);
 
-        boolean resultado = contaService.salvar(conta);
         resp.sendRedirect("contaServlet?action=listar");
 
     }
 
-    private void atualizaEstatus(HttpServletRequest req, HttpServletResponse resp, String acao) throws IOException {
+    private void atualizaStatus(HttpServletRequest req, HttpServletResponse resp, String acao) throws IOException {
 
         int id = Integer.parseInt(req.getParameter("id"));
 

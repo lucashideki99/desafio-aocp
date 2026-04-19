@@ -14,7 +14,7 @@
         <div class="container mt-4">
             <h2>🏦 Gerenciamento de Contas</h2>
             <hr>
-
+            
             <div class="d-flex justify-content-end mb-3">
                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdicionar">
                     + Adicionar Conta
@@ -107,17 +107,6 @@
         <jsp:include page="/componentes/modalDetalheConta.jsp" /> 
 
         <jsp:include page="/footer.jsp" />
-
-        <script>
-            function abrirDetalhe(id, nome, numero, saldo, status) {
-                document.getElementById("detalheId").innerText = id;
-                document.getElementById("detalheNome").innerText = nome;
-                document.getElementById("detalheNumero").innerText = numero;
-                document.getElementById("detalheSaldo").innerText = saldo;
-                document.getElementById("detalheStatus").innerText = status;
-            }
-        </script>
-
 
         <script src="${pageContext.request.contextPath}/js/contas.js"></script>
     </body>

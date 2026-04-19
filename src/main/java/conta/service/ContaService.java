@@ -24,9 +24,13 @@ public class ContaService {
         }
         
         conta.setStatus(conta.getStatus() != null ? conta.getStatus() : "ATIVA");
-        conta.setDataCriacao(LocalDateTime.now());
         
-        return contaDAO.salvar(conta);
+        if(conta.getId() == null){
+            conta.setDataCriacao(LocalDateTime.now());
+            return contaDAO.salvar(conta);
+        }else{
+            return contaDAO.atualizar(conta);
+        }
     }
     
     public List<Conta> listar() throws Exception {
@@ -41,10 +45,10 @@ public class ContaService {
         List<Conta> contas = contaDAO.listar();
         
         if (conta.getNomeTitular() == null || conta.getNomeTitular().isEmpty()) {
-            return false;
+           return false;
         }
 
-        if (conta.getNumeroConta() <= 0 && conta.getNumeroConta() > 999999) {
+        if (conta.getNumeroConta() <= 0 && conta.getNumeroConta() < 999999) {
             return false;
         }
 
@@ -57,6 +61,11 @@ public class ContaService {
         }
 
         for (Conta c : contas) {
+            // se estiver atualizando e for o próprio registro, ignora
+            if (conta.getId() != null && c.getId().equals(conta.getId())) {
+                continue;
+            }
+            
             if (c.getNumeroConta().equals(conta.getNumeroConta())) {
                 return false;
             }
