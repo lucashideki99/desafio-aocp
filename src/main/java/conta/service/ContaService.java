@@ -34,8 +34,9 @@ public class ContaService {
     }
     
     
-    private boolean validaCampos(Conta conta){
-
+    private boolean validaCampos(Conta conta) throws Exception{
+        List<Conta> contas = contaDAO.listar();
+        
         if (conta.getNomeTitular() == null || conta.getNomeTitular().isEmpty()) {
             return false;
         }
@@ -52,12 +53,11 @@ public class ContaService {
             return false;
         }
 
-//        for (Conta c : contas) {
-//            if (c.getNumeroConta().equals(conta.getNumeroConta())) {
-//                return false;
-////                return Resultado.erro("Número da conta já existe");
-//            }
-//        }
+        for (Conta c : contas) {
+            if (c.getNumeroConta().equals(conta.getNumeroConta())) {
+                return false;
+            }
+        }
         return true;
     }
     
