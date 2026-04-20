@@ -17,11 +17,11 @@
             <ul class="navbar-nav ms-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/desafio/paginas/contas.jsp">Contas</a>
+                    <a class="nav-link" href="/desafio/contaServlet?action=listar">Contas</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/desafio/paginas/transferencia.jsp">Transferência</a>
+                    <a class="nav-link" href="/desafio/movimentacaoServlet?action=listar">Transferência</a>
                 </li>
 
             </ul>
