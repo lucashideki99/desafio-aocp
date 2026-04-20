@@ -1,0 +1,55 @@
+-- Tabela Conta
+CREATE TABLE conta (
+    id SERIAL PRIMARY KEY,
+    nome_titular VARCHAR(150) NOT NULL,
+    numero_conta Integer NOT NULL UNIQUE,
+    saldo NUMERIC(15,2) NOT NULL CHECK (saldo >= 0),
+    status VARCHAR(20) NOT NULL,
+    data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabela Movimentação
+CREATE TABLE movimentacao (
+    id SERIAL PRIMARY KEY,
+    conta_origem_id INTEGER,
+    conta_destino_id INTEGER,
+    valor NUMERIC(15,2) NOT NULL CHECK (valor > 0),
+    tipo VARCHAR(20) NOT NULL,
+    data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    observacao TEXT,
+    CONSTRAINT fk_conta_origem
+        FOREIGN KEY (conta_origem_id)
+        REFERENCES conta(id),
+    CONSTRAINT fk_conta_destino
+        FOREIGN KEY (conta_destino_id)
+        REFERENCES conta(id)
+);
+
+
+-- =========================
+-- INSERTS TABELA CONTA
+-- =========================
+
+INSERT INTO conta (nome_titular, numero_conta, saldo, status)
+VALUES ('Lucas', 1001, 1500.00, 'ATIVA');
+
+INSERT INTO conta (nome_titular, numero_conta, saldo, status)
+VALUES ('Maria Silva', 1002, 2500.50, 'ATIVA');
+
+INSERT INTO conta (nome_titular, numero_conta, saldo, status)
+VALUES ('João Souza', 1003, 800.75, 'INATIVA');
+
+
+-- =========================
+-- INSERTS TABELA MOVIMENTACAO
+-- =========================
+
+INSERT INTO movimentacao (conta_origem_id, conta_destino_id, valor, tipo, observacao)
+VALUES (1, 2, 200.00, 'Transferencia', 'Pagamento entre contas');
+
+INSERT INTO movimentacao (conta_origem_id, conta_destino_id, valor, tipo, observacao)
+VALUES (2, 3, 150.50, 'Transferencia', 'Transferência de saldo');
+
+INSERT INTO movimentacao (conta_origem_id, conta_destino_id, valor, tipo, observacao)
+VALUES (1, 3, 300.00, 'Transferencia', 'Envio de dinheiro');
+
