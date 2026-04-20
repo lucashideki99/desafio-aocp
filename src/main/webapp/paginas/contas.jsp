@@ -48,19 +48,12 @@
                             <td>
 
                                 <button class="btn btn-info btn-sm"
-                                         onclick="abrirDetalhe('${conta.id}')"
-                                         data-bs-toggle="modal"
-                                         data-bs-target="#modalDetalheConta"
-                                         onclick="abrirDetalhe(
-                                                        '${conta.id}',
-                                                        '${conta.nomeTitular}',
-                                                        '${conta.numeroConta}',
-                                                        '${conta.saldo}',
-                                                        '${conta.status}'
-                                                        )">
+                                        onclick="abrirDetalhe('${conta.id}')"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalDetalheConta">
                                     + Informações
                                 </button>
-
+                                        
                                 <!-- ATUALIZAR -->
                                 <button class="btn btn-warning btn-sm"
                                         data-bs-toggle="modal"

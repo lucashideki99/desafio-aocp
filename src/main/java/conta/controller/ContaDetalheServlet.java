@@ -7,9 +7,7 @@ package conta.controller;
 import conta.model.Conta;
 import conta.service.ContaService;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,18 +36,41 @@ public class ContaDetalheServlet extends HttpServlet {
 
             Conta conta = contaService.buscarPorId(id);
 
-            String json = "{"
-                    + "\"id\":" + conta.getId() + ","
-                    + "\"nome\":\"" + conta.getNomeTitular() + "\","
-                    + "\"numero\":" + conta.getNumeroConta() + ","
-                    + "\"saldo\":" + conta.getSaldo() + ","
-                    + "\"status\":\"" + conta.getStatus() + "\""
-                    + "}";
+            MovimentacaoService movimentacaoService = new MovimentacaoService();
+            List<Movimentacao> movimentacoes = movimentacaoService.buscarPorConta(id);
 
-            resp.getWriter().write(json);
+            StringBuilder json = new StringBuilder();
+
+            json.append("{")
+                    .append("\"id\":").append(conta.getId()).append(",")
+                    .append("\"nome\":\"").append(conta.getNomeTitular()).append("\",")
+                    .append("\"numero\":").append(conta.getNumeroConta()).append(",")
+                    .append("\"saldo\":").append(conta.getSaldo()).append(",")
+                    .append("\"status\":\"").append(conta.getStatus()).append("\",")
+                    .append("\"movimentacoes\":[");
+
+            for (int i = 0; i < movimentacoes.size(); i++) {
+                Movimentacao m = movimentacoes.get(i);
+
+                json.append("{")
+                        .append("\"id\":").append(m.getId()).append(",")
+                        .append("\"tipo\":\"").append(m.getTipo()).append("\",")
+                        .append("\"valor\":").append(m.getValor()).append(",")
+                        .append("\"destino\":").append(m.getContaDestinoId()).append(",")
+                        .append("\"data\":\"").append(m.getDataHora()).append("\"")
+                        .append("}");
+
+                if (i < movimentacoes.size() - 1) {
+                    json.append(",");
+                }
+            }
+
+            json.append("]}");
+
+            resp.getWriter().write(json.toString());
 
         } catch (Exception e) {
-            resp.getWriter().write("{\"error\":\"erro\"}");
+            resp.getWriter().write("{\"error\":\"erro ao buscar detalhes\"}");
         }
     }
 }
