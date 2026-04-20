@@ -62,8 +62,8 @@
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
-                        <th>Conta Origem</th>
-                        <th>Conta Destino</th>
+                        <th>ID Conta Origem</th>
+                        <th>ID Conta Destino</th>
                         <th>Valor</th>
                         <th>Tipo</th>
                         <th>Data/Hora</th>
