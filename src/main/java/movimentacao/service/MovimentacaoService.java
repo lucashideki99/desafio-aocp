@@ -9,8 +9,10 @@ import conta.dao.ContaDAO;
 import conta.model.Conta;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import movimentacao.dao.MovimentacaoDAO;
 import movimentacao.model.Movimentacao;
 
@@ -23,7 +25,7 @@ public class MovimentacaoService {
     private ContaDAO contaDAO = new ContaDAO();
     private MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
 
-    public void transferir(int origemId, int destinoId, BigDecimal valor, String obs) throws Exception {
+    public boolean transferir(int numeroContaOrigem, int numeroContaDestino, BigDecimal valorTranferencia, String obs) throws Exception {
 
         Connection conn = null;
 
@@ -31,30 +33,26 @@ public class MovimentacaoService {
             conn = Conexao.getConnection();
             conn.setAutoCommit(false);
 
-            Conta origem = contaDAO.buscarPorNumeroConta(conn, origemId);
-            Conta destino = contaDAO.buscarPorNumeroConta(conn, destinoId);
+            Conta ContaOrigem = contaDAO.buscarPorNumeroConta(conn, numeroContaOrigem);
+            Conta contaDestino = contaDAO.buscarPorNumeroConta(conn, numeroContaDestino);
 
-            if (origem == null || destino == null) {
-                throw new Exception("Conta não encontrada");
-            }
-
-            if (origem.getSaldo().compareTo(valor) < 0) {
-                throw new Exception("Saldo insuficiente");
+            if (!validaConta(ContaOrigem, contaDestino, valorTranferencia)) {
+                return false;
             }
 
             // débita na conta origem
-            origem.setSaldo(origem.getSaldo().subtract(valor));
-            contaDAO.atualizarSaldo(conn, origem);
+            ContaOrigem.setSaldo(ContaOrigem.getSaldo().subtract(valorTranferencia));
+            contaDAO.atualizarSaldo(conn, ContaOrigem);
 
             // crédita na conta destino
-            destino.setSaldo(destino.getSaldo().add(valor));
-            contaDAO.atualizarSaldo(conn, destino);
+            contaDestino.setSaldo(contaDestino.getSaldo().add(valorTranferencia));
+            contaDAO.atualizarSaldo(conn, contaDestino);
 
             // REGISTRA TRANSFERÊNCIA
             Movimentacao t = new Movimentacao();
-            t.setContaOrigemId(origemId);
-            t.setContaDestinoId(destinoId);
-            t.setValor(valor);
+            t.setContaOrigemId(ContaOrigem.getId());
+            t.setContaDestinoId(contaDestino.getId());
+            t.setValor(valorTranferencia);
             t.setTipo("Transferencia");
             t.setObservacao(obs);
             t.setDataHora(LocalDateTime.now());
@@ -62,19 +60,49 @@ public class MovimentacaoService {
             movimentacaoDAO.salvar(conn, t);
 
             conn.commit();
-
+            return true;
         } catch (Exception e) {
             if (conn != null) {
-                conn.rollback();
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
-            throw e;
+            return false;
+
         } finally {
             if (conn != null) {
-                conn.close();
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
-    
+
+    private boolean validaConta(Conta contaOrigem, Conta contaDestino, BigDecimal valorTranferencia) {
+        
+        if(Objects.equals(contaOrigem.getId(), contaDestino.getId())){
+            return false;
+        }
+        
+        if (contaOrigem == null || contaDestino == null) {
+            return false;
+        }
+
+        if (contaOrigem.getSaldo().compareTo(valorTranferencia) < 0) {
+            return false;
+        }
+        
+        if (!contaOrigem.getStatus().equals("ATIVA") || !contaDestino.getStatus().equals("ATIVA"))  {
+            return false;
+        }
+        
+        return true;
+    }
+
     public List<Movimentacao> buscarPorConta(Integer id) throws Exception {
         return movimentacaoDAO.buscarPorConta(id);
     }

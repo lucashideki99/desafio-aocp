@@ -27,12 +27,12 @@
                     <div class="row">
 
                         <div class="col-md-4">
-                            <label>Conta origem</label>
+                            <label>Número Conta origem</label>
                             <input type="number" name="contaOrigem" class="form-control" required>
                         </div>
 
                         <div class="col-md-4">
-                            <label>Conta destino</label>
+                            <label>Número Conta destino</label>
                             <input type="number" name="contaDestino" class="form-control" required>
                         </div>
 

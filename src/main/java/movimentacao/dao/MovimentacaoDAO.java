@@ -8,6 +8,7 @@ import com.lucas.desafio.util.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,8 @@ public class MovimentacaoDAO {
             stmt.setString(6, t.getObservacao());
 
             stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(); 
         }
     }
 
