@@ -4,8 +4,12 @@
  */
 package movimentacao.dao;
 
+import com.lucas.desafio.util.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import movimentacao.model.Movimentacao;
 
 /**
@@ -13,6 +17,31 @@ import movimentacao.model.Movimentacao;
  * @author lucas
  */
 public class MovimentacaoDAO {
+
+    public List<Movimentacao> listar() throws Exception {
+
+        List<Movimentacao> lista = new ArrayList<>();
+
+        String sql = "SELECT id, conta_origem_id, conta_destino_id, valor,  data_hora, observacao  FROM Movimentacao ORDER BY data_hora DESC";
+
+        try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+
+                Movimentacao t = new Movimentacao();
+                t.setId(rs.getInt("id"));
+                t.setContaOrigemId(rs.getInt("conta_origem_id"));
+                t.setContaDestinoId(rs.getInt("conta_destino_id"));
+                t.setValor(rs.getBigDecimal("valor"));
+                t.setDataHora(rs.getTimestamp("data_hora").toLocalDateTime());
+                t.setObservacao(rs.getString("observacao"));
+
+                lista.add(t);
+            }
+        }
+
+        return lista;
+    }
 
     public void salvar(Connection conn, Movimentacao t) throws Exception {
 
@@ -26,12 +55,11 @@ public class MovimentacaoDAO {
             stmt.setInt(2, t.getContaDestinoId());
             stmt.setBigDecimal(3, t.getValor());
             stmt.setString(4, t.getTipo());
-            stmt.setTimestamp(5, java.sql.Timestamp.valueOf(t.getDataTransferencia()));
+            stmt.setTimestamp(5, java.sql.Timestamp.valueOf(t.getDataHora()));
             stmt.setString(6, t.getObservacao());
 
             stmt.executeUpdate();
         }
     }
-
 
 }

@@ -5,17 +5,9 @@
         <servlet-class>conta.controller.ContasServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TransferenciaServlet</servlet-name>
+        <servlet-name>MovimentacaoServlet</servlet-name>
         <servlet-class>movimentacao.controller.MovimentacaoServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>ContasServlet</servlet-name>
-        <url-pattern>/ContasServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TransferenciaServlet</servlet-name>
-        <url-pattern>/TransferenciaServlet</url-pattern>
-    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

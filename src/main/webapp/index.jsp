@@ -3,9 +3,6 @@
     <head>
         <title>Controle Financeiro</title>
 
-        <!-- Bootstrap -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
         <style>
             body {
                 background-color: #f4f6f9;
@@ -56,7 +53,7 @@
 
                 <!-- TRANSFERÊNCIA -->
                 <div class="col-md-4">
-                    <a href="/desafio/paginas/transferencia.jsp" style="text-decoration:none;">
+                    <a href="/desafio/movimentacaoServlet?action=listar" style="text-decoration:none;">
                         <div class="card card-menu text-center p-4">
                             <h3>💸 Transferência</h3>
                             <p>Realizar transferências entre contas</p>

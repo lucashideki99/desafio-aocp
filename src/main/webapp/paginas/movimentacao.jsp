@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,9 +17,10 @@
             <h2>💸 Nova Movimentação</h2>
             <hr>
 
-            <div class="card p-4">
+            <!-- FORMULÁRIO -->
+            <div class="card p-4 mb-4">
 
-                <form action="${pageContext.request.contextPath}/transferenciaServlet" method="post">
+                <form action="${pageContext.request.contextPath}/movimentacaoServlet" method="post">
 
                     <input type="hidden" name="action" value="transferir">
 
@@ -25,12 +28,12 @@
 
                         <div class="col-md-4">
                             <label>Conta origem</label>
-                            <input type="text" name="contaOrigem" class="form-control" required>
+                            <input type="number" name="contaOrigem" class="form-control" required>
                         </div>
 
                         <div class="col-md-4">
                             <label>Conta destino</label>
-                            <input type="text" name="contaDestino" class="form-control" required>
+                            <input type="number" name="contaDestino" class="form-control" required>
                         </div>
 
                         <div class="col-md-4">
@@ -50,9 +53,44 @@
 
             </div>
 
+
+            <!-- HISTÓRICO -->
+            <h2>📊 Histórico de Movimentação</h2>
+            <hr>
+
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Conta Origem</th>
+                        <th>Conta Destino</th>
+                        <th>Valor</th>
+                        <th>Tipo</th>
+                        <th>Data/Hora</th>
+                        <th>Observação</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <c:forEach var="t" items="${movimentacao}">
+                        <tr>
+                            <td>${t.id}</td>
+                            <td>${t.contaOrigemId}</td>
+                            <td>${t.contaDestinoId}</td>
+                            <td>${t.valor}</td>
+                            <td>TRANSFERÊNCIA</td>
+                            <td>${t.dataHoraFormatada}</td>
+                            <td>${t.observacao}</td>
+                        </tr>
+                    </c:forEach>
+
+                </tbody>
+            </table>
+
         </div>
-        
+
         <jsp:include page="/footer.jsp" />
-        
+
     </body>
 </html>

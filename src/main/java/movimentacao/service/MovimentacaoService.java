@@ -10,6 +10,7 @@ import conta.model.Conta;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.time.LocalDateTime;
+import java.util.List;
 import movimentacao.dao.MovimentacaoDAO;
 import movimentacao.model.Movimentacao;
 
@@ -20,7 +21,7 @@ import movimentacao.model.Movimentacao;
 public class MovimentacaoService {
 
     private ContaDAO contaDAO = new ContaDAO();
-    private MovimentacaoDAO transferenciaDAO = new MovimentacaoDAO();
+    private MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
 
     public void transferir(int origemId, int destinoId, BigDecimal valor, String obs) throws Exception {
 
@@ -56,9 +57,9 @@ public class MovimentacaoService {
             t.setValor(valor);
             t.setTipo("Transferencia");
             t.setObservacao(obs);
-            t.setDataTransferencia(LocalDateTime.now());
+            t.setDataHora(LocalDateTime.now());
 
-            transferenciaDAO.salvar(conn, t);
+            movimentacaoDAO.salvar(conn, t);
 
             conn.commit();
 
@@ -72,6 +73,10 @@ public class MovimentacaoService {
                 conn.close();
             }
         }
+    }
+
+    public List<Movimentacao> listar() throws Exception {
+        return movimentacaoDAO.listar();
     }
 
 }
