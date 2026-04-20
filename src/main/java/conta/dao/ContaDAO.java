@@ -105,6 +105,34 @@ public class ContaDAO {
         }
     }
 
+    public Conta buscarPorId(int id) throws Exception {
+
+        String sql = "SELECT id, nome_titular, numero_conta, saldo, status, data_criacao FROM conta WHERE id = ?";
+
+        try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                if (rs.next()) {
+
+                    Conta conta = new Conta();
+
+                    conta.setId(rs.getInt("id"));
+                    conta.setNomeTitular(rs.getString("nome_titular"));
+                    conta.setNumeroConta(rs.getInt("numero_conta"));
+                    conta.setSaldo(rs.getBigDecimal("saldo"));
+                    conta.setStatus(rs.getString("status"));
+                    conta.setDataCriacao(rs.getTimestamp("data_criacao").toLocalDateTime());
+                    return conta;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public Conta buscarPorNumeroConta(Connection conn, Integer numeroConta) throws Exception {
 
         String sql = "SELECT id, nome_titular, numero_conta, saldo, status FROM conta WHERE numero_conta = ?";

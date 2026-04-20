@@ -14,7 +14,7 @@
         <div class="container mt-4">
             <h2>🏦 Gerenciamento de Contas</h2>
             <hr>
-            
+
             <div class="d-flex justify-content-end mb-3">
                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdicionar">
                     + Adicionar Conta
@@ -32,7 +32,7 @@
                         <th>Número</th>
                         <th>Saldo</th>
                         <th>Status</th>
-                        <th>Ações</th>
+                        <th width="25%">Ações</th>
                     </tr>
                 </thead>
 
@@ -46,6 +46,21 @@
                             <td>${conta.status}</td>
 
                             <td>
+
+                                <button class="btn btn-info btn-sm"
+                                         onclick="abrirDetalhe('${conta.id}')"
+                                         data-bs-toggle="modal"
+                                         data-bs-target="#modalDetalheConta"
+                                         onclick="abrirDetalhe(
+                                                        '${conta.id}',
+                                                        '${conta.nomeTitular}',
+                                                        '${conta.numeroConta}',
+                                                        '${conta.saldo}',
+                                                        '${conta.status}'
+                                                        )">
+                                    + Informações
+                                </button>
+
                                 <!-- ATUALIZAR -->
                                 <button class="btn btn-warning btn-sm"
                                         data-bs-toggle="modal"

@@ -24,10 +24,6 @@
                     <a class="nav-link" href="/desafio/paginas/transferencia.jsp">Transferência</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/desafio/paginas/historico.jsp">Histórico</a>
-                </li>
-
             </ul>
 
         </div>

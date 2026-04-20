@@ -74,6 +74,10 @@ public class MovimentacaoService {
             }
         }
     }
+    
+    public List<Movimentacao> buscarPorConta(Integer id) throws Exception {
+        return movimentacaoDAO.buscarPorConta(id);
+    }
 
     public List<Movimentacao> listar() throws Exception {
         return movimentacaoDAO.listar();

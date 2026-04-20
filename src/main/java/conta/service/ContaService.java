@@ -33,6 +33,11 @@ public class ContaService {
         }
     }
     
+    public Conta buscarPorId(Integer id) throws Exception {
+        return contaDAO.buscarPorId(id);
+    }
+    
+    
     public List<Conta> listar() throws Exception {
         return contaDAO.listar();
     }

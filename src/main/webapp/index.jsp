@@ -42,7 +42,7 @@
             <div class="row g-4">
 
                 <!-- CONTAS -->
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <a href="/desafio/contaServlet?action=listar" style="text-decoration:none;">
                         <div class="card card-menu text-center p-4">
                             <h3>🏦 Contas</h3>
@@ -52,21 +52,11 @@
                 </div>
 
                 <!-- TRANSFERÊNCIA -->
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <a href="/desafio/movimentacaoServlet?action=listar" style="text-decoration:none;">
                         <div class="card card-menu text-center p-4">
                             <h3>💸 Transferência</h3>
                             <p>Realizar transferências entre contas</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- HISTÓRICO -->
-                <div class="col-md-4">
-                    <a href="/desafio/paginas/historico.jsp" style="text-decoration:none;">
-                        <div class="card card-menu text-center p-4">
-                            <h3>📊 Histórico</h3>
-                            <p>Visualizar movimentações</p>
                         </div>
                     </a>
                 </div>

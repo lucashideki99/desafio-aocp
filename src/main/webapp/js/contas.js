@@ -28,3 +28,20 @@ function preencherEdicao(id, nome, numero, saldo, status) {
         btnSalvar.innerText = "Atualizar";
     }
 }
+
+function abrirDetalhe(id) {
+    const contextPath = window.location.pathname.split('/')[1];
+
+    fetch('/' + contextPath + '/ContaDetalhamentoServlet?id=' + id)
+        .then(resp => resp.json())
+        .then(data => {
+
+            document.getElementById("detalheId").innerText = data.id;
+            document.getElementById("detalheNome").innerText = data.nome;
+            document.getElementById("detalheNumero").innerText = data.numero;
+            document.getElementById("detalheSaldo").innerText = data.saldo;
+            document.getElementById("detalheStatus").innerText = data.status;
+
+        })
+        .catch(err => console.log("Erro:", err));
+}

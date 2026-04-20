@@ -8,6 +8,7 @@ import com.lucas.desafio.util.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import movimentacao.model.Movimentacao;
@@ -60,6 +61,45 @@ public class MovimentacaoDAO {
 
             stmt.executeUpdate();
         }
+    }
+
+    public List<Movimentacao> buscarPorConta(int contaId) throws Exception {
+
+        List<Movimentacao> lista = new ArrayList<>();
+
+        String sql = "SELECT id, conta_origem_id, conta_destino_id, valor, tipo, observacao, data_hora FROM movimentacao "
+                + "WHERE conta_origem_id = ? OR conta_destino_id = ? "
+                + "ORDER BY data_hora DESC";
+
+        try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, contaId);
+            stmt.setInt(2, contaId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+
+                    Movimentacao m = new Movimentacao();
+
+                    m.setId(rs.getInt("id"));
+                    m.setContaOrigemId(rs.getInt("conta_origem_id"));
+                    m.setContaDestinoId(rs.getInt("conta_destino_id"));
+                    m.setValor(rs.getBigDecimal("valor"));
+                    m.setTipo(rs.getString("tipo"));
+                    m.setObservacao(rs.getString("observacao"));
+
+                    Timestamp ts = rs.getTimestamp("data_hora");
+                    if (ts != null) {
+                        m.setDataHora(ts.toLocalDateTime());
+                    }
+
+                    lista.add(m);
+                }
+            }
+        }
+
+        return lista;
     }
 
 }
